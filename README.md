@@ -5,11 +5,25 @@ Run qlever-control from within a Docker container with all required tools pre-in
 ## Features
 
 This Docker container includes:
-- **Java (OpenJDK 11)** - Required for qlever operations
+- **Java (OpenJDK 17)** - Required for qlever operations
 - **jq** - JSON processor for data manipulation
 - **pipx** - Python package manager
 - **qlever** - Installed via pipx
 - **Docker CLI** - To run Docker commands on the host VM
+
+Base image: **Debian Bookworm (Slim)**
+
+## Automated Builds
+
+Docker images are automatically built and pushed to GitHub Container Registry (ghcr.io) via GitHub Actions:
+- **On push to main/master**: Tagged as `latest`
+- **On pull requests**: Tagged with PR number
+- **On releases**: Tagged with version numbers
+
+Pull the pre-built image:
+```bash
+docker pull ghcr.io/gipplab/qlever-control:latest
+```
 
 ## Prerequisites
 
