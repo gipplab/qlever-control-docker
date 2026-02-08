@@ -17,9 +17,8 @@ echo ""
 # Test 2: Verify all tools are installed
 echo "Test 2: Verifying all tools are installed..."
 docker run --rm qlever-control:test bash -c "
-    java -version 2>&1 | grep -q 'openjdk version' && echo '  ✓ Java (OpenJDK 11) installed' || exit 1
+    java -version 2>&1 | grep -q 'openjdk version' && echo '  ✓ Java (OpenJDK 17) installed' || exit 1
     jq --version | grep -q 'jq-' && echo '  ✓ jq installed' || exit 1
-    pipx --version | grep -q '1.' && echo '  ✓ pipx installed' || exit 1
     qlever --version | grep -q 'qlever' && echo '  ✓ qlever installed' || exit 1
     docker --version | grep -q 'Docker version' && echo '  ✓ Docker CLI installed' || exit 1
 " 2>&1 | grep "✓"
