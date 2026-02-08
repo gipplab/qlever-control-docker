@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     pipx \
     unzip \
+    expect \
+    lbzip2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure pipx path is set
