@@ -49,6 +49,53 @@ docker pull ghcr.io/gipplab/qlever-control:latest
    docker-compose down
    ```
 
+### Using Docker Stack (Docker Swarm)
+
+For production deployments using Docker Swarm, use the provided `docker-stack.yml` template:
+
+1. Initialize Docker Swarm (if not already initialized):
+   ```bash
+   docker swarm init
+   ```
+
+2. Deploy the stack:
+   ```bash
+   docker stack deploy -c docker-stack.yml qlever
+   ```
+
+3. Check the service status:
+   ```bash
+   docker stack services qlever
+   docker service ps qlever_qlever-control
+   ```
+
+4. Access the container:
+   ```bash
+   # Get the container ID/name
+   docker service ps qlever_qlever-control --filter desired-state=running --format '{{.Name}}.{{.ID}}'
+   
+   # Access the container (replace CONTAINER_ID with actual ID from above)
+   docker exec -it qlever_qlever-control.1.CONTAINER_ID bash
+   ```
+   
+   Or use this one-liner (if only one container is running):
+   ```bash
+   docker exec -it $(docker ps -q -f name=qlever_qlever-control) bash
+   ```
+
+5. Remove the stack:
+   ```bash
+   docker stack rm qlever
+   ```
+
+The `docker-stack.yml` template uses the latest pre-built image from GitHub Container Registry (`ghcr.io/gipplab/qlever-control:latest`) and includes:
+- Resource limits and reservations
+- Restart policies
+- Update and rollback configurations
+- Persistent volume for workspace data
+
+**Note:** The service runs with `replicas: 1` because the Docker socket mount prevents horizontal scaling. See the Security Note section below for important security considerations when mounting the Docker socket.
+
 ### Using Docker directly
 
 1. Build the image:
