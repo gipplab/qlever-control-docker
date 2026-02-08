@@ -90,3 +90,18 @@ Once inside the container, you can use:
 ## Security Note
 
 Mounting the Docker socket (`/var/run/docker.sock`) gives the container full access to the Docker daemon on the host. This is equivalent to root access on the host machine. Only use this in trusted environments.
+
+## Testing
+
+A test script is provided to verify all functionality:
+
+```bash
+./test.sh
+```
+
+This will:
+- Build the Docker image
+- Verify all tools are installed correctly
+- Test Docker connectivity
+- Test docker-compose functionality
+- Test workspace mounting
