@@ -10,6 +10,8 @@ This Docker container includes:
 - **pipx** - Python package manager
 - **qlever** - Installed via pipx
 - **Docker CLI** - To run Docker commands on the host VM
+- **unbuffer** (from expect) - Disables output buffering for real-time logging
+- **lbzcat** (from lbzip2) - Fast, parallel bzip2 decompression
 
 Base image: **Debian Bookworm (Slim)**
 
@@ -138,6 +140,8 @@ Once inside the container, you can use:
 - `pipx --version` - Check pipx installation
 - `qlever --version` - Check qlever installation
 - `docker ps` - Run Docker commands on the host
+- `unbuffer --version` - Check unbuffer installation
+- `lbzcat --version` - Check lbzcat installation
 
 ## Volumes
 
