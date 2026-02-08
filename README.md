@@ -5,7 +5,7 @@ Run qlever-control from within a Docker container with all required tools pre-in
 ## Features
 
 This Docker container includes:
-- **Java** (OpenJDK) - Required for qlever operations
+- **Java (OpenJDK 11)** - Required for qlever operations
 - **jq** - JSON processor for data manipulation
 - **pipx** - Python package manager
 - **qlever** - Installed via pipx

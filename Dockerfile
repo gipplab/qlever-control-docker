@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update and install basic dependencies including ca-certificates first
+# Update and install all dependencies in fewer layers for better caching
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     curl \
@@ -11,25 +11,9 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     wget \
     git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Docker CLI (using docker.io from Ubuntu repos - more reliable)
-RUN apt-get update && \
-    apt-get install -y docker.io && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install Java (OpenJDK)
-RUN apt-get update && apt-get install -y \
-    default-jdk \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install jq (JSON processor)
-RUN apt-get update && apt-get install -y \
+    docker.io \
+    openjdk-11-jdk \
     jq \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install pipx and Python
-RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
