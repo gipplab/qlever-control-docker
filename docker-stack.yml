@@ -19,7 +19,10 @@ services:
     
     volumes:
       # Mount Docker socket to allow running Docker commands on host
-      # Note: In swarm mode, this will use the socket from the node where the container runs
+      # SECURITY WARNING: Mounting the Docker socket gives this container full control over
+      # the Docker daemon, equivalent to root access on the host. Only use in trusted environments.
+      # Note: In swarm mode, this will use the socket from the node where the container runs.
+      # This also limits horizontal scaling - the service must run with replicas: 1
       - /var/run/docker.sock:/var/run/docker.sock
       # Mount workspace directory for working with files
       - qlever-workspace:/workspace
@@ -35,6 +38,7 @@ services:
     # Deployment configuration for Docker Swarm
     deploy:
       # Run one replica of the service
+      # Note: Must be 1 due to Docker socket mount - cannot scale horizontally
       replicas: 1
       
       # Restart policy
