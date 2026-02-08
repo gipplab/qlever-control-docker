@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install qlever using pip (recommended for platforms without native packages)
-# See https://docs.qlever.dev/quickstart/#others
+# See https://docs.qlever.dev/quickstart/
+# Using --break-system-packages as we're in a containerized environment without system package conflicts
 RUN python3 -m pip install --break-system-packages qlever
 
 # Set working directory
