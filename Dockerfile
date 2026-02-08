@@ -4,6 +4,9 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install all dependencies in fewer layers for better caching
+# Note: docker.io (Ubuntu's Docker package) is used instead of docker-ce-cli for better
+# reliability in various build environments. The container uses the host's Docker engine
+# via socket mount, so CLI compatibility is typically not an issue.
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     curl \

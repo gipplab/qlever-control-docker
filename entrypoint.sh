@@ -13,7 +13,7 @@ echo "- Java version:"
 java -version 2>&1 | head -n 1
 echo "- jq version: $(jq --version)"
 echo "- pipx version: $(pipx --version)"
-echo "- qlever version: $(qlever --version 2>&1 || echo 'qlever installed via pipx')"
+echo "- qlever version: $(qlever --version 2>&1 | tail -1)"
 
 # Optional: Test Docker connectivity to host
 if [ "${TEST_DOCKER}" = "true" ]; then
