@@ -1,0 +1,79 @@
+# Docker Stack deployment template for QLever Control
+# This file is designed for use with Docker Swarm
+#
+# Deploy the stack:
+#   docker stack deploy -c docker-stack.yml qlever
+#
+# Remove the stack:
+#   docker stack rm qlever
+#
+# List services:
+#   docker stack services qlever
+
+version: "3.8"
+
+services:
+  qlever-control:
+    # Use the latest image from GitHub Container Registry
+    image: ghcr.io/gipplab/qlever-control:latest
+    
+    volumes:
+      # Mount Docker socket to allow running Docker commands on host
+      # Note: In swarm mode, this will use the socket from the node where the container runs
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Mount workspace directory for working with files
+      - qlever-workspace:/workspace
+    
+    environment:
+      # Set to "true" to test Docker connectivity on startup
+      - TEST_DOCKER=false
+    
+    # Keep container running with stdin and tty
+    stdin_open: true
+    tty: true
+    
+    # Deployment configuration for Docker Swarm
+    deploy:
+      # Run one replica of the service
+      replicas: 1
+      
+      # Restart policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      
+      # Resource limits and reservations
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      
+      # Placement constraints (optional)
+      # Uncomment to run on manager nodes only
+      # placement:
+      #   constraints:
+      #     - node.role == manager
+      
+      # Update configuration
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        order: stop-first
+      
+      # Rollback configuration
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: pause
+        order: stop-first
+
+# Named volume for persistent workspace data across container restarts
+volumes:
+  qlever-workspace:
+    driver: local
