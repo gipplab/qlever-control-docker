@@ -7,8 +7,7 @@ Run qlever-control from within a Docker container with all required tools pre-in
 This Docker container includes:
 - **Java (OpenJDK 17)** - Required for qlever operations
 - **jq** - JSON processor for data manipulation
-- **pipx** - Python package manager
-- **qlever** - Installed via pipx
+- **qlever** - Installed via pip (https://docs.qlever.dev/quickstart/)
 - **Docker CLI** - To run Docker commands on the host VM
 
 Base image: **Debian Bookworm (Slim)**
@@ -88,7 +87,6 @@ This will run `docker run hello-world` on startup to verify connectivity.
 Once inside the container, you can use:
 - `java -version` - Check Java installation
 - `jq --version` - Check jq installation
-- `pipx --version` - Check pipx installation
 - `qlever --version` - Check qlever installation
 - `docker ps` - Run Docker commands on the host
 

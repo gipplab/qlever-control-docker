@@ -20,14 +20,11 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
-    pipx \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure pipx path is set
-ENV PATH="/root/.local/bin:${PATH}"
-
-# Install qlever using pipx
-RUN pipx install qlever && pipx ensurepath
+# Install qlever using pip (recommended for platforms without native packages)
+# See https://docs.qlever.dev/quickstart/#others
+RUN python3 -m pip install --break-system-packages qlever
 
 # Set working directory
 WORKDIR /workspace
