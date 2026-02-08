@@ -17,15 +17,15 @@ RUN apt-get update && apt-get install -y \
     docker.io \
     openjdk-17-jdk \
     jq \
-    python3 \
-    python3-pip \
-    python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-# Install qlever using pip (recommended for platforms without native packages)
-# See https://docs.qlever.dev/quickstart/
-# Using --break-system-packages as we're in a containerized environment without system package conflicts
-RUN python3 -m pip install --break-system-packages qlever
+# Install qlever from official package repository
+# See https://docs.qlever.dev/quickstart/#debian-and-ubuntu
+RUN wget -qO - https://packages.qlever.dev/pub.asc | gpg --dearmor | tee /usr/share/keyrings/qlever.gpg > /dev/null && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] https://packages.qlever.dev/ $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") main" | tee /etc/apt/sources.list.d/qlever.list && \
+    apt-get update && \
+    apt-get install -y qlever && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /workspace
